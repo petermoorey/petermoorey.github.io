@@ -29,7 +29,9 @@ openpyxl
 
 Install the modules using Python PIP:
 
-```pip install -r requirements.txt```
+```
+pip install -r requirements.txt
+```
 
 ## The Script
 
