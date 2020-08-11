@@ -1,0 +1,55 @@
+---
+layout: post
+title: 802.1Q (Q-In-Q) Tunnelling
+date: 2011-05-13 11:32:20 +0600
+description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. # Add post description (optional)
+img: tunnel.jpg # Add image post (optional)
+tags: [802.1q, dot1q, linkedin, q-in-q, qinq, switching ]
+---
+
+Commonly used by service providers when providing L2 products, 802.1Q tunnel (aka Q-in-Q) can be used to allow multiple customers to trunk multiple VLANs over the service providers  switched infrastructure.  As a customer you can trunk your existing vlan numbering scheme, the VLAN tag you select is transparent to the service provider as they apply and use their own additional tag to identify you.
+
+On receipt of a frame from the customer, the SP adds a second tag, in this case ’55’ , the ID must be unique for each customer.   After potentially traversing multiple SP switches the second tag is removed on egress to the respective customer. Refer to this link to see a packet capture highlighting the two 802.1Q headers.
+
+To configure, the first step is to increase the switch system MTU by 4 bytes in order to accomodate the additional tag:
+
+```
+system mtu 1504
+```
+
+Secondly, to avoid potential clashing of customer and provider native untagged vlans, enable tagging of the native vlan:
+
+```
+vlan tag dot1q native
+```
+
+Enable dot1q tunnel on the customer facing interface, and L2 protocol tunnelling
+```
+!
+interface FastEthernet0/16
+ description SWP | Customer 1 Site
+ switchport access vlan 55
+ switchport mode dot1q-tunnel
+ l2protocol-tunnel cdp
+ l2protocol-tunnel stp
+ l2protocol-tunnel vtp
+ no cdp enable
+!
+```
+
+Interconnections between the providers switchs are configured as trunk links, in this case permitting VLAN 55 for customer 1.
+
+Layer 2 protocol tunnel (not to be confused with L2 tunnelling protocol) has been activated on the interface. This feature provides the customer with transparency between their sites, they see their remote switches in CDP, VTP information can be propagated across their WAN along with STP information. It looks like the sites are directly connected, despite the providers switches being in the switching path.
+
+As you can see below the CDP, VTP and STP information is fowarded over the providers infrastructure:
+
+```
+S1#show l2protocol-tunnel
+
+Port       Protocol Shutdown  Drop      Encapsulation Decapsulation Drop
+                    Threshold Threshold Counter       Counter       Counter
+---------- -------- --------- --------- ------------- ------------- -------------
+Fa0/16              cdp           ----      ----        40        38         0
+                    stp           ----      ----      5139       596         0
+                    vtp           ----      ----         7         3         0
+```
