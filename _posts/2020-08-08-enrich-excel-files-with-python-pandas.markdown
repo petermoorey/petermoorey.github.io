@@ -47,69 +47,11 @@ High level process:
 Here's the Python script, hopefully you can follow the comments to understand the flow.  
 
 *excel-enrichment.py*
-```python
-import requests
-import pandas as pd
-import logging
-
-# setup logging, so we can view what's happening as it executes
-logging.getLogger().addHandler(logging.StreamHandler())
-logging.getLogger().setLevel(logging.INFO)
-
-# define the file/sheet names
-existing_file = 'endpoint-report.xlsx'
-new_file = 'endpoint-report-with-locations.xlsx'
-sheet_name = 'Endpoint Data'
-
-
-# reusable function to get the location for a given IP address
-def make_api_call(ip_address: str):
-    """Return the location for a given IP address."""
-    url = f"https://mywebsite/api/?ip={ip_address}"
-    resp = requests.get(url=url)
-    if resp.status_code == 200:
-        location = resp.json()['location']
-        return location
-    else:
-        raise HTTPError(resp.status_code, resp.text)
-
-
-if __name__ == '__main__':
-
-    # open the Excel document and import as a Pandas data frame
-    df = pd.read_excel(existing_file, sheet_name=sheet_name)
-
-    # get the values of the column 'IPv4 Address'
-    ip_addresses = df['IPv4 Address']
-
-    # create an empty list to store the location values
-    locations = []
-
-    # get the total rows in the data frame and create a counter to track progress
-    total_ips = len(ip_addresses)
-    processed_ips = 0
-
-    # loop over each IP address
-    for ip in ip_addresses:
-        # query API to get the location
-        location = make_api_call(ip)
-
-        # log to screen the IP and the discovered location
-        logging.info(f"{processed_ips}/{total_ips}: {ip} --> {location}")
-
-        # add the discovered location to the list of location values
-        locations.append(location)
-
-        # increment the number of processed IP addresses
-        processed_ips += 1
-
-    # create a new column in the dataframe called 'location' and assign the values from the now populated list
-    df['location'] = locations
-
-    # save the data frame to a new Excel document
-    df.to_excel(new_file, sheet_name=sheet_name)
-
-```
+<iframe
+  src="https://carbon.now.sh/embed?bg=rgba(171%2C%20184%2C%20195%2C%201)&t=material&wt=none&l=python&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fl=1&fm=Hack&fs=14px&lh=133%25&si=false&es=2x&wm=false&code=import%2520requests%250Aimport%2520pandas%2520as%2520pd%250Aimport%2520logging%250A%250A%2523%2520setup%2520logging%252C%2520so%2520we%2520can%2520view%2520what%27s%2520happening%2520as%2520it%2520executes%250Alogging.getLogger().addHandler(logging.StreamHandler())%250Alogging.getLogger().setLevel(logging.INFO)%250A%250A%2523%2520define%2520the%2520file%252Fsheet%2520names%250Aexisting_file%2520%253D%2520%27endpoint-report.xlsx%27%250Anew_file%2520%253D%2520%27endpoint-report-with-locations.xlsx%27%250Asheet_name%2520%253D%2520%27Endpoint%2520Data%27%250A%250A%250A%2523%2520reusable%2520function%2520to%2520get%2520the%2520location%2520for%2520a%2520given%2520IP%2520address%250Adef%2520make_api_call(ip_address%253A%2520str)%253A%250A%2520%2520%2520%2520%2522%2522%2522Return%2520the%2520location%2520for%2520a%2520given%2520IP%2520address.%2522%2522%2522%250A%2520%2520%2520%2520url%2520%253D%2520f%2522https%253A%252F%252Fmywebsite%252Fapi%252F%253Fip%253D%257Bip_address%257D%2522%250A%2520%2520%2520%2520resp%2520%253D%2520requests.get(url%253Durl)%250A%2520%2520%2520%2520if%2520resp.status_code%2520%253D%253D%2520200%253A%250A%2520%2520%2520%2520%2520%2520%2520%2520location%2520%253D%2520resp.json()%255B%27location%27%255D%250A%2520%2520%2520%2520%2520%2520%2520%2520return%2520location%250A%2520%2520%2520%2520else%253A%250A%2520%2520%2520%2520%2520%2520%2520%2520raise%2520HTTPError(resp.status_code%252C%2520resp.text)%250A%250A%250Aif%2520__name__%2520%253D%253D%2520%27__main__%27%253A%250A%250A%2520%2520%2520%2520%2523%2520open%2520the%2520Excel%2520document%2520and%2520import%2520as%2520a%2520Pandas%2520data%2520frame%250A%2520%2520%2520%2520df%2520%253D%2520pd.read_excel(existing_file%252C%2520sheet_name%253Dsheet_name)%250A%250A%2520%2520%2520%2520%2523%2520get%2520the%2520values%2520of%2520the%2520column%2520%27IPv4%2520Address%27%250A%2520%2520%2520%2520ip_addresses%2520%253D%2520df%255B%27IPv4%2520Address%27%255D%250A%250A%2520%2520%2520%2520%2523%2520create%2520an%2520empty%2520list%2520to%2520store%2520the%2520location%2520values%250A%2520%2520%2520%2520locations%2520%253D%2520%255B%255D%250A%250A%2520%2520%2520%2520%2523%2520get%2520the%2520total%2520rows%2520in%2520the%2520data%2520frame%2520and%2520create%2520a%2520counter%2520to%2520track%2520progress%250A%2520%2520%2520%2520total_ips%2520%253D%2520len(ip_addresses)%250A%2520%2520%2520%2520processed_ips%2520%253D%25200%250A%250A%2520%2520%2520%2520%2523%2520loop%2520over%2520each%2520IP%2520address%250A%2520%2520%2520%2520for%2520ip%2520in%2520ip_addresses%253A%250A%2520%2520%2520%2520%2520%2520%2520%2520%2523%2520query%2520API%2520to%2520get%2520the%2520location%250A%2520%2520%2520%2520%2520%2520%2520%2520location%2520%253D%2520make_api_call(ip)%250A%250A%2520%2520%2520%2520%2520%2520%2520%2520%2523%2520log%2520to%2520screen%2520the%2520IP%2520and%2520the%2520discovered%2520location%250A%2520%2520%2520%2520%2520%2520%2520%2520logging.info(f%2522%257Bprocessed_ips%257D%252F%257Btotal_ips%257D%253A%2520%257Bip%257D%2520--%253E%2520%257Blocation%257D%2522)%250A%250A%2520%2520%2520%2520%2520%2520%2520%2520%2523%2520add%2520the%2520discovered%2520location%2520to%2520the%2520list%2520of%2520location%2520values%250A%2520%2520%2520%2520%2520%2520%2520%2520locations.append(location)%250A%250A%2520%2520%2520%2520%2520%2520%2520%2520%2523%2520increment%2520the%2520number%2520of%2520processed%2520IP%2520addresses%250A%2520%2520%2520%2520%2520%2520%2520%2520processed_ips%2520%252B%253D%25201%250A%250A%2520%2520%2520%2520%2523%2520create%2520a%2520new%2520column%2520in%2520the%2520dataframe%2520called%2520%27location%27%2520and%2520assign%2520the%2520values%2520from%2520the%2520now%2520populated%2520list%250A%2520%2520%2520%2520df%255B%27location%27%255D%2520%253D%2520locations%250A%250A%2520%2520%2520%2520%2523%2520save%2520the%2520data%2520frame%2520to%2520a%2520new%2520Excel%2520document%250A%2520%2520%2520%2520df.to_excel(new_file%252C%2520sheet_name%253Dsheet_name)%250A"
+  style="width: 1024px; height: 473px; border:0; transform: scale(1); overflow:hidden;"
+  sandbox="allow-scripts allow-same-origin">
+</iframe>
 
 Whilst it executes you will see output like the example below, and a new Excel document will be created in the same folder as your script:
 
