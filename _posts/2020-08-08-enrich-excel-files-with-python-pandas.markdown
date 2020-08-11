@@ -2,9 +2,9 @@
 layout: post
 title: Enriching Excel Files with Python Pandas
 date: 2020-08-09 11:32:20 +0600
-description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. # Add post description (optional)
-img: panda.jpg # Add image post (optional)
-fig-caption: Photo courtesy of https://www.chinadaily.com.cn/ # Add figcaption (optional)
+description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes.
+img: panda.jpg
+fig-caption: Photo courtesy of https://www.chinadaily.com.cn/
 tags: [python, pandas, excel]
 ---
 

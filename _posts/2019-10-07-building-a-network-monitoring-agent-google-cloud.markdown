@@ -2,9 +2,9 @@
 layout: post
 title: Building a Network Monitoring Agent using Google Cloud
 date: 2019-10-07 00:00:00 +0600
-description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. # Add post description (optional)
-img: monitoring-agent.png # Add image post (optional)
-tags: [Js, Conference] # add tag
+description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes.
+img: monitoring-agent.png
+tags: [Js, Conference]
 ---
 
 ## Overview

@@ -2,10 +2,9 @@
 layout: post
 title: IT automation performance insights with OpenCensus and Google Cloud StackDriver
 date: 2019-05-12 00:00:00 +0600
-description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. # Add post description (optional)
-img: trace-waterfall.png # Add image post (optional)
-fig-caption: # Add figcaption (optional)
-tags: [Productivity, Workflow] # add tag
+description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes.
+img: trace-waterfall.png
+tags: [Productivity, Workflow]
 ---
 
 ## Overview

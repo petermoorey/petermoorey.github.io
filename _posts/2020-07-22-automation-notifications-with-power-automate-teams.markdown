@@ -2,9 +2,9 @@
 layout: post
 title: Notifications with Microsoft Power Automate and Teams
 date: 2020-07-22 00:00:00 +0600
-description:  # Add post description (optional)
-img: notification.jpg # Add image post (optional)
-tags: [Productivity, Software] # add tag
+description:
+img: notification.jpg
+tags: [Productivity, Software]
 ---
 
 This article provides a quick explanation of how you can easily add feedback into your automation processes.  It is extremely simple and effective and can be modified to suit whatever your requirements might be.
