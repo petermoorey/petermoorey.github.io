@@ -775,7 +775,8 @@ html {
 }
 
 body {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 17px;
   color: #515151;
   background-color: #fbfbfb;
   margin: 0;
@@ -971,11 +972,11 @@ table tfoot td {
 }
 
 .about .author-name {
-  font-family: 'PT Serif', serif;
+  font-family: 'Roboto Condensed', serif;
   margin: 0 0 10px;
   position: relative;
   padding-bottom: 15px;
-  font-size: 16px;
+  font-size: 17px;
   text-transform: uppercase;
   color: #333030;
   font-weight: 700;
@@ -998,7 +999,7 @@ table tfoot td {
 }
 
 .about p {
-  font-size: 16px;
+  font-size: 17px;
   margin: 0 0 10px;
 }
 
@@ -1027,7 +1028,7 @@ table tfoot td {
   position: relative;
   color: #333030;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 14px;
   margin: 0 0 5px;
   text-transform: uppercase;
   text-align: center;
@@ -1164,7 +1165,7 @@ footer .copyright {
 }
 
 .post .post-content .post-title a {
-  font-family: 'PT Serif', serif;
+  font-family: 'Roboto Condensed', serif;
   text-decoration: none;
   color: #263959;
 }
@@ -1215,7 +1216,7 @@ a.newer-posts:hover {
 .header-page .page-date {
   color: #a0a0a0;
   font-weight: 300;
-  font-size: 12px;
+  font-size: 16px;
   text-transform: uppercase;
 }
 
@@ -1242,7 +1243,7 @@ a.newer-posts:hover {
   text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
   font-weight: 700;
   text-transform: uppercase;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .page-cover-image .page-image {
@@ -1280,7 +1281,7 @@ a.newer-posts:hover {
   padding: 5px 10px;
   margin-left: 5px;
   color: #263959;
-  font-size: 12px;
+  font-size: 14px;
   -webkit-transition: background-color .3s;
   -o-transition: background-color .3s;
   transition: background-color .3s;
@@ -1296,7 +1297,7 @@ a.newer-posts:hover {
 
 .page-footer .page-tag a {
   text-decoration: none;
-  font-size: 10px;
+  font-size: 14px;
   padding: 5px 10px;
   margin-left: 5px;
   color: #263959;
