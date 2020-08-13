@@ -124,7 +124,6 @@ automation_result = {
 }
 url = "https://prod-123.westeurope.logic.azure.com:443/workflows/235cb58..."
 requests.post(url=url, data=json.dumps(automation_result))
-
 ```
 
 If successful, you should see a desktop alert from Microsoft Teams, and a message from Power Automate.
