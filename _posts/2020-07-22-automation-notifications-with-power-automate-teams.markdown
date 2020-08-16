@@ -84,7 +84,7 @@ At this point you need to think about the data you wish to communicate to the en
 </table>
 
 At this point you should have the first step in your process complete:
-<img src="https://github.com/pmoorey/articles/blob/master/img/flow-step1.jpg?raw=true">
+![](/assets/img/automation-notifications-with-power-automate-teams/flow-step1.jpg)
 
 ## Step 2 - Create an Adaptive Card (optional)
 
@@ -94,7 +94,7 @@ Let's begin designing our card using the web application at https://adaptivecard
 
 Here's what I came up with:
 
-<img src="https://github.com/pmoorey/articles/blob/master/img/adaptive%20card.jpg?raw=true">
+![](/assets/img/automation-notifications-with-power-automate-teams/adaptive%20card.jpg)
 
 ## Step 3 - Send the Notification
 
@@ -102,7 +102,7 @@ Okay, almost done.  The final thing we need to do is send the notification.  In 
 
 |Add Action to Post Adaptive Card to User | Insert variables where required |
 | ------------- | ------------- |
-|<img src="https://github.com/pmoorey/articles/blob/master/img/flow-step2-1.jpg?raw=true"> | <img src="https://github.com/pmoorey/articles/blob/master/img/flow-step2-2.jpg?raw=true"> |
+|![](/assets/img/automation-notifications-with-power-automate-teams/flow-step2-1.jpg) | ![](/assets/img/automation-notifications-with-power-automate-teams/flow-step2-2.jpg) |
 
 ## Finale
 
@@ -130,4 +130,4 @@ If successful, you should see a desktop alert from Microsoft Teams, and a messag
 
 |Microsoft Teams Notification | Microsoft Teams Message |
 | ------------- | ------------- |
-|<img src="https://github.com/pmoorey/articles/blob/master/img/flow-alert.jpg?raw=true"> | <img src="https://github.com/pmoorey/articles/blob/master/img/flow-msg.jpg?raw=true"> |
+|![](/assets/img/automation-notifications-with-power-automate-teams/flow-alert.jpg) | ![](/assets/img/automation-notifications-with-power-automate-teams/flow-msg.jpg) |

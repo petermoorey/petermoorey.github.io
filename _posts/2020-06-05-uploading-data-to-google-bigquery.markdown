@@ -27,7 +27,9 @@ I later realized the most efficient solution would be to append all data into a 
 ### The Code
 
 Requirements:
-```pip3 install google-cloud-bigquery pyarrow pandas```
+```
+pip3 install google-cloud-bigquery pyarrow pandas
+```
 
 Script:
 ```python

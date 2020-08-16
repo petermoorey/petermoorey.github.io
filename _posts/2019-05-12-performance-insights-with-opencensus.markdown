@@ -17,19 +17,19 @@ This article will demonstrate how you can achieve this, using OpenCensus and Sta
 A trace is a dataset which describes how a request flows through the various components of a system.  It typically includes data such as processing time (latency) at various stages.  A waterfall view can be used to visualize processing times,  similar to that provided by developer tools within a web browser like Google Chrome, but using a different source of data.
 
 _The waterfall chart in Chrome developer tools is visually similar_
-<img src="https://github.com/pmoorey/articles/blob/master/img/tracing/chrome-waterfall.png?raw=true">
+![](/assets/img/performance-insights-with-opencensus/chrome-waterfall.png)
 
 ## What components are involved in tracing?
 
 Tracing is typically enabled by within the source code of an application, or activated via middleware.  A popular tracing library is <a href="http://opencensus.io">OpenCensus</a> which originated from a Google internal library called Census.  OpenCensus integrates with various programming langauges and includes the ability to export traces to various external systems including Google StackDriver, Prometheus, SignalFx and Zipkin. 
 
 _Sample architecture diagram for tracing_ 
-<img src="https://github.com/pmoorey/articles/blob/master/img/tracing/trace-architecture.png?raw=true">
+![](/assets/img/performance-insights-with-opencensus/trace-architecture.png)
 
 A trace represents a single request as it flows through a system, it includes one parent span, and optionally one or more child spans.  A span represents a measurement of one or more operations in a trace, for example an operation (span) could encompass a database query, HTTP request to an API, or function within the source code.
 
 _Example trace for a web request, which includes multiple spans for various operations_ 
-<img src="https://github.com/pmoorey/articles/blob/master/img/tracing/trace-example.png?raw=true">
+![](/assets/img/performance-insights-with-opencensus/trace-example.png)
 
 ## Enabling traces for IT automation processes
 
@@ -139,21 +139,20 @@ if __name__ == '__main__':
 After executing the script the trace will immediately be visible in the StackDriver Trace section of Google Cloud.  As you can see, the parent span is named 'it-process', followed by child spans of 'it-process/get-master-data', 'it-process/get-it-system-data' etc.  
 
 _Chart highlighting each operation in the script, with processing times_
-
-<img src="https://github.com/pmoorey/articles/blob/master/img/tracing/trace-waterfall.png?raw=true">
+![](/assets/img/performance-insights-with-opencensus/trace-waterfall.png)
 
 **Scatter graph**
 
 The scatter graph is useful for spotting outliers, where an operation has taken a longer than usual time to process.  In the graph there is clearly an issue at 9.54pm.  Selecting a data point will display the waterfall chart, along with the operation which introduced the delay.
 
 _Scatter graph showing requests by response time_
-<img src="https://github.com/pmoorey/articles/blob/master/img/tracing/trace-scatter-graph.png?raw=true">
+![](/assets/img/performance-insights-with-opencensus/trace-scatter-graph.png)
 
 **Analysis Report**
 
 You can create customized reports to gain insights into trace data, for example viewing percentage of traces by distribution of response time.
 
 _Screenshot of custom trace analysis report_
-<img src="https://github.com/pmoorey/articles/blob/master/img/tracing/trace-report.png?raw=true">
+![](/assets/img/performance-insights-with-opencensus/trace-report.png)
 
 I hope this article was useful and provided some ideas for how you could leverage traces to get insights into your processes and applications.

@@ -13,7 +13,7 @@ The concept of APIC EM is that an organization can define and implement network 
 
 ## APIC EM architecture
 
-<img src="https://media-exp1.licdn.com/dms/image/C4E12AQGiuY8EPvlaZg/article-inline_image-shrink_1000_1488/0?e=1602720000&v=beta&t=2v7S2RiGaSO79E1eQxzYnzS5THa4gerQlks3xl9zr1U">
+![](/assets/img/cisco-apic-em-first-impressions/1.jpeg)
 
 APIC EM is a software based network controller which is included within the Cisco ONE software portfolio, it has no direct cost associated with it which is great news.  The setup process is straightforward.  Using an ISO image a single host VM or bare-metal system can be up and running in around 30 minutes after following a basic installation wizard.  Support for multiple hosts in a scalable and high availability mode is available.  APIC EM uses Grapevine 'elastic services' enabling it to operate using a horizontally scalable Platform as a Service (PaaS) model; each service runs within a separate container enabling it to scale up and down to meet demand.  The Grapevine system is quite interesting in itself and is the first Cisco software product that I've seen using a PaaS approach.
 
@@ -30,7 +30,7 @@ The built-in application/feature which really interested me the most in the init
 
 ## APIC EM Plug 'n Play:
 
-<img src="https://media-exp1.licdn.com/dms/image/C4D12AQEE65nwOXFFJQ/article-inline_image-shrink_1500_2232/0?e=1602720000&v=beta&t=JZX5v7DXUETzYboaQ-G7Fh-xx74coJlnY37ysh0ksWc">
+![](/assets/img/cisco-apic-em-first-impressions/1.jpeg)
 
 I'm keen to see how Cisco develop the APIC EM controller in the future, the initial release is certainly very promising.  In its current state I don't think there is a huge scope to write customized network policies as the API is fairly limited, no doubt it will be expanded quickly to enable the creation of a broad range of network policies and more network state information will be exposed via the API.
 
