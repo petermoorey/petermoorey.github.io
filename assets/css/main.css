@@ -807,22 +807,6 @@ progress::-moz-progress-bar {
   background-color: grey;
 }
 
-.progress-container {
-  width: 100%;
-  background-color: transparent;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 5px;
-  display: block;
-}
-.progress-bar {
-  background-color: grey;
-  width: 0%;
-  display: block;
-  height: inherit;
-}
-
 html {
   line-height: 1.5;
 }
