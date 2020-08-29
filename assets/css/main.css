@@ -869,9 +869,12 @@ pre code {
 table {
   border: 1px solid #aaa;
   background-color: #eee;
-  width: 100%;
   text-align: left;
   border-collapse: collapse;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  position: relative;
 }
 
 table td, table.blueTable th {
@@ -881,6 +884,7 @@ table td, table.blueTable th {
 
 table tbody td {
   font-size: 13px;
+  white-space: nowrap;
 }
 
 table tr:nth-child(even) {
