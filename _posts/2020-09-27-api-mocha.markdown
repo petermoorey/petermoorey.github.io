@@ -1,0 +1,36 @@
+---
+layout: post
+title: Announcing API Mocha 
+date: 2020-09-27 16:32:20 +0600
+description: 
+img: api-mocha.jpg
+tags: [api, mock mocha, flask, python]
+---
+
+I'm excited to announce the availability of <a href="https://apimocha.com" target="_blank">API Mocha</a>, a free online web service for mocking Application Programmable Interface (API) responses.
+
+API Mocha is enables software developers and system integrators to:
+- Simulate APIs for the purpose of software development/testing
+- Create customizable responses to API calls including data, headers, status codes and delay
+- Easily inspect data sent by web hooks
+- Quickly test changes to the behaviour/response/design of an API
+- Avoiding delay whilst waiting for an API to be developed by another team
+
+Please visit the website at <a href="https://apimocha.com" target="_blank">https://apimocha.com</a> and try it out!
+
+# How it works 
+
+It's really simple and fast, here's what to do:
+
+1. Go to the API Mocha <a href="https://apimocha.com">home page</a> and create an endpoint with a name such as 'my cool project'
+2. After you create an endpoint you'll be redirected to a page where you can view API requests
+3. Send an API request to the endpoint and you'll see it magically appear on the page
+4. Click the Edit button and define how you'd like API Mocha to respond to future requests with the same HTTP method and URL
+5. Make another API request and you'll see the mocked response. Awesome right!
+
+# Demonstration
+
+<table><td></td>
+<img style="border: 1px solid #555;" src="/assets/img/api-mocha/demo-api-mocha.gif">
+
+
