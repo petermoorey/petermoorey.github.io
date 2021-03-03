@@ -3,7 +3,7 @@ layout: post
 title: Automating Azure DevOps Pull Request Comments
 date: 2021-03-03 13:57:20 +0600
 description: 
-img: message.png
+img: message.jpg
 tags: [azure, devops, pull, automation]
 ---
 
