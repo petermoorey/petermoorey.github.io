@@ -7,17 +7,17 @@ img: message.jpg
 tags: [azure, devops, pull, automation]
 ---
 
-In this article I will explain how you can automatically add comments to an Azure DevOps (ADO) pull request during pipeline execution.  This technique can be useful when you want to add additional information to the pull request, which is generated during pipeline execution.  This technique utilizes the ADO API and could be adjusted to allow the creation of comments from any application/process.
+In this article I will explain how you can automatically add comments to an Azure DevOps (ADO) pull request during pipeline execution.  This technique can be useful when you want to add additional information which is only available during pipeline execution.  The approach utilizes the ADO API and could be adjusted to allow the creation of comments from any application/process.
 
 # How it works 
 
 1. Developer initiates a pull request to merge code from one Git branch to another
-2. The pull request triggers the execution of a pipeline
-3. A task in the pipeline automatically adds a comment to the pull request
+2. Pull request triggers the execution of a pipeline
+3. Task in the pipeline automatically adds a comment to the pull request
 
 # The Pipeline
 
-The pipeline is defined in YAML format and stored in the ADO code repository.  One of the tasks calls a Python script which calculates something and posts the results as a comment to the pull request.  One important point is that a variable 'System.AccessToken' must be assigned; it is used to authenticate to ADO API when adding the comment.
+The pipeline is defined in YAML format and stored in the ADO code repository.  A task executes a Python script which does something according to your needs and posts the results as a comment to the pull request.  One important point is that a variable 'System.AccessToken' must be assigned to the task, in order to expose the token used to authenticate to ADO API when adding the comment.
 
 ```yaml
 # ADO Pipeline Definition
