@@ -33,7 +33,6 @@ steps:
   env:
     SYSTEM_ACCESSTOKEN: $(System.AccessToken)
   displayName: 'Python script to execute something and add pull request comment'
-
 ```
 
 # Adding A Comment
@@ -59,7 +58,6 @@ msg = pull_request.Message()
 result = msg.add(comment=comment)
 if result is False:
     print("Sending message failed")
-
 ```
 
 If you now check the pull request you will find that the comment has been added!
