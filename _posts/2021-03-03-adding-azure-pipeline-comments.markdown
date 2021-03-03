@@ -3,11 +3,11 @@ layout: post
 title: Automating Azure DevOps Pull Request Comments
 date: 2021-03-03 13:57:20 +0600
 description: 
-img: api-mocha.jpg
+img: message.png
 tags: [azure, devops, pull, automation]
 ---
 
-In this article I will explain how you can automatically add comments to an Azure DevOps (ADO) pull request during pipeline execution.  This technique utilizes the ADO API and could be adjusted to allow the creation of comments from any application/process.  
+In this article I will explain how you can automatically add comments to an Azure DevOps (ADO) pull request during pipeline execution.  This technique can be useful when you want to add additional information to the pull request, which is generated during pipeline execution.  This technique utilizes the ADO API and could be adjusted to allow the creation of comments from any application/process.
 
 # How it works 
 
@@ -36,9 +36,39 @@ steps:
 
 ```
 
+# Adding A Comment
+
+The following example shows how a Python module is imported, and used to add a comment to the active pull request.  Pull requests comments can be published using markdown format as shown.
+
+do-something.py
+```python
+import pull_request
+
+comment = """
+## Useful Table
+
+| Item | Col1  | Col2  | Col3  | Col4  |
+|---|---|---|---|---|
+| 1 | a | b | c | d |
+| 2 | a | b | c | d |
+| 3 | a | b | c | d |
+
+Some additional text here
+"""
+msg = pull_request.Message()
+result = msg.add(comment=comment)
+if result is False:
+    print("Sending message failed")
+
+```
+
+If you now check the pull request you will find that the comment has been added!
+
+![](/assets/img/ado-pull-request/pull-request-comment.png)
+
 # ADO Pull Request Message Python Module
 
-The following Python module is used to add a comment to the pull request.
+Below is the Python module which used to add a comment to the pull request.  As you can see, most of the settings are derived from environment variables which are automatically set by the ADO pipeline.  An API call is used to post the data to the ADO API.
 
 pull_request.py
 ```python
@@ -52,7 +82,8 @@ class Message():
         SYSTEM_TEAMPROJECT = os.getenv('SYSTEM_TEAMPROJECT')
         BUILD_REPOSITORY_ID = os.getenv('BUILD_REPOSITORY_ID')
         self.url = f"{SYSTEM_COLLECTIONURI}{SYSTEM_TEAMPROJECT}/_apis/git/repositories/" \
-                   f"{BUILD_REPOSITORY_ID}/pullRequests/{SYSTEM_PULLREQUEST_PULLREQUESTID}/threads?api-version=6.0"
+                   f"{BUILD_REPOSITORY_ID}/pullRequests/{SYSTEM_PULLREQUEST_PULLREQUESTID}" \
+                   "/threads?api-version=6.0"
         self.headers = {
             "content-type": "application/json",
             "Authorization": f"BEARER {os.getenv('SYSTEM_ACCESSTOKEN')}"
@@ -75,24 +106,4 @@ class Message():
             return True
         else:
             return False
-```
-# Adding A Comment
-
-The following example shows the Python module being used to add a comment to the active pull request.
-
-```python
-import pull_request
-
-comment = """
-| Item | Col1  | Col2  | Col3  | Col4  |
-|---|---|---|---|---|
-| 1 | a | b | c | d |
-| 2 | a | b | c | d |
-| 3 | a | b | c | d |
-"""
-msg = pull_request.Message()
-result = msg.add(comment=comment)
-if result is False:
-    print("Sending message failed")
-
 ```
