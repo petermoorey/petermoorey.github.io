@@ -1,0 +1,98 @@
+---
+layout: post
+title: Automating Azure DevOps Pull Request Comments
+date: 2021-03-03 13:57:20 +0600
+description: 
+img: api-mocha.jpg
+tags: [azure, devops, pull, automation]
+---
+
+In this article I will explain how you can automatically add comments to an Azure DevOps (ADO) pull request during pipeline execution.  This technique utilizes the ADO API and could be adjusted to allow the creation of comments from any application/process.  
+
+# How it works 
+
+1. Developer initiates a pull request to merge code from one Git branch to another
+2. The pull request triggers the execution of a pipeline
+3. A task in the pipeline automatically adds a comment to the pull request
+
+# The Pipeline
+
+The pipeline is defined in YAML format and stored in the ADO code repository.  One of the tasks calls a Python script which calculates something and posts the results as a comment to the pull request.  One important point is that a variable 'System.AccessToken' must be assigned; it is used to authenticate to ADO API when adding the comment.
+
+```yaml
+# ADO Pipeline Definition
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: |
+    python do-something.py
+  env:
+    SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+  displayName: 'Python script to execute something and add pull request comment'
+
+```
+
+# ADO Pull Request Message Python Module
+
+The following Python module is used to add a comment to the pull request.
+
+pull_request.py
+```python
+import requests
+import os
+
+class Message():
+    def __init__(self):
+        SYSTEM_COLLECTIONURI = os.getenv('SYSTEM_COLLECTIONURI')
+        SYSTEM_PULLREQUEST_PULLREQUESTID = os.getenv('SYSTEM_PULLREQUEST_PULLREQUESTID')
+        SYSTEM_TEAMPROJECT = os.getenv('SYSTEM_TEAMPROJECT')
+        BUILD_REPOSITORY_ID = os.getenv('BUILD_REPOSITORY_ID')
+        self.url = f"{SYSTEM_COLLECTIONURI}{SYSTEM_TEAMPROJECT}/_apis/git/repositories/" \
+                   f"{BUILD_REPOSITORY_ID}/pullRequests/{SYSTEM_PULLREQUEST_PULLREQUESTID}/threads?api-version=6.0"
+        self.headers = {
+            "content-type": "application/json",
+            "Authorization": f"BEARER {os.getenv('SYSTEM_ACCESSTOKEN')}"
+        }
+
+    def add(self, comment):
+        ''' Add a message to Azure DevOps Pull Request'''
+        data = {
+            "comments": [
+                {
+                    "parentCommentId": 0,
+                    "content": comment,
+                    "commentType": 1
+                }
+            ],
+            "status": 1
+        }
+        r = requests.post(url=self.url, json=data, headers=self.headers)
+        if r.status_code == 200:
+            return True
+        else:
+            return False
+```
+# Adding A Comment
+
+The following example shows the Python module being used to add a comment to the active pull request.
+
+```python
+import pull_request
+
+comment = """
+| Item | Col1  | Col2  | Col3  | Col4  |
+|---|---|---|---|---|
+| 1 | a | b | c | d |
+| 2 | a | b | c | d |
+| 3 | a | b | c | d |
+"""
+msg = pull_request.Message()
+result = msg.add(comment=comment)
+if result is False:
+    print("Sending message failed")
+
+```
