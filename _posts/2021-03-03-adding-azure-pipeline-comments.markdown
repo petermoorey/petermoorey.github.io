@@ -69,7 +69,7 @@ If you now check the pull request you will find that the comment has been added!
 
 # ADO Pull Request Message Python Module
 
-Below is the Python module which used to add a comment to the pull request.  As you can see, most of the settings are derived from environment variables which are automatically set by the ADO pipeline.  An API call is used to post the data to the ADO API.
+Below is the Python module I wrote which is used to add a comment to the pull request.  As you can see, most of the settings are derived from environment variables which are automatically set by the ADO pipeline.  An API call is used to post the data to the ADO API.
 
 *pull_request.py*
 ```python
