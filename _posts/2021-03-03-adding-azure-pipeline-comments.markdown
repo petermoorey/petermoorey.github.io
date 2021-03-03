@@ -77,6 +77,8 @@ import requests
 import os
 
 class Message():
+    '''Instance of a message'''
+
     def __init__(self):
         SYSTEM_COLLECTIONURI = os.getenv('SYSTEM_COLLECTIONURI')
         SYSTEM_PULLREQUEST_PULLREQUESTID = os.getenv('SYSTEM_PULLREQUEST_PULLREQUESTID')
@@ -90,7 +92,7 @@ class Message():
             "Authorization": f"BEARER {os.getenv('SYSTEM_ACCESSTOKEN')}"
         }
 
-    def add(self, comment):
+    def add(self, comment: str) -> bool:
         ''' Add a message to Azure DevOps Pull Request'''
         data = {
             "comments": [
