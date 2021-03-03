@@ -17,8 +17,11 @@ In this article I will explain how you can automatically add comments to an Azur
 
 # The Pipeline
 
-The pipeline is defined in YAML format and stored in the ADO code repository.  A task executes a Python script which does something according to your needs and posts the results as a comment to the pull request.  One important point is that a variable 'System.AccessToken' must be assigned to the task, in order to expose the token used to authenticate to ADO API when adding the comment.
+Before setting up the pipeline, enable the ADO project 'Build Service' permissions allow 'Contribute to pull requests'.  Go to ADO Settings > Repositories > Permissions > Select the project Build Service > Tick 'Contribute to pull requests'.
 
+The pipeline is best defined in YAML format and stored in the ADO code repository.  A task executes a Python script which does something according to your needs and posts the results as a comment to the pull request.  One important point is that a variable 'System.AccessToken' must be assigned to the task, in order to expose the automatically generated token used to authenticate to ADO API. 
+
+*azure-pipelines.yml*
 ```yaml
 # ADO Pipeline Definition
 trigger:
@@ -39,7 +42,7 @@ steps:
 
 The following example shows how a Python module is imported, and used to add a comment to the active pull request.  Pull requests comments can be published using markdown format as shown.
 
-do-something.py
+*do-something.py*
 ```python
 import pull_request
 
@@ -68,7 +71,7 @@ If you now check the pull request you will find that the comment has been added!
 
 Below is the Python module which used to add a comment to the pull request.  As you can see, most of the settings are derived from environment variables which are automatically set by the ADO pipeline.  An API call is used to post the data to the ADO API.
 
-pull_request.py
+*pull_request.py*
 ```python
 import requests
 import os
