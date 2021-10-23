@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Ten SD-WAN Administrative Security Considerations
+title: Ten SD-WAN Identity and Access Management Security Considerations
 date: 2021-10-23 07:38:20 +0000
 description: 
 img: sd-wan.jpg
