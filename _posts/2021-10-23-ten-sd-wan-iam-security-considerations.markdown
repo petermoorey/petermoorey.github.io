@@ -13,34 +13,34 @@ Ultimately, the goal is to ensure the security and integrity of the network infr
 
 # 1 - Risk assessment
 - Completing a risk assessment before deploying SD-WAN ensures appropriate controls are implemented from the outset
-- Risk assessment should identify potential losses/failures, and determine control measures that will reduce/prevent a condition from occurring, or reduce its severity
+- The risk assessment should identify potential losses/failures, and determine control measures that will reduce/prevent a condition from occurring, or limit its severity
 - Work with your selected vendor to get their input/suggestions
-- Review with your CyberSecurity team and other stakeholders
+- Review the completed assessment with your CyberSecurity team and other stakeholders
 
 # 2 - Identity management
-- Prevent the use of local accounts, or limit use to disaster recovery scenarios
-- If using local accounts, use a password with high entropy (preferably rotated automatically) and store it in a secure vault which is only accessible to those who require it
+- Prevent the use of local user accounts, or limit account use to disaster recovery scenarios
+- If using local accounts, use a password with high entropy (preferably rotated automatically) and store credentials in a secure vault which is only accessible to those who require it
 - Integrate with a well-maintained identity store (could be Microsoft Active Directory, linked to HR processes), ensuring account lifecycle management is in place
 
 # 3 - Authorization
-- Determine which users and systems/tools require access, and what activities they will perform
-- Maintain groups for each role and authorize access based on group membership
+- Determine which users and systems/tools require access, and what specific activities they need to perform
+- Maintain separate groups for each role and authorize access based on group membership
 - Configure all administrative user interfaces to use these groups for consistent authorization (Web, SSH, APIs, etc.)
 - Apply least privileged access model
 
 # 4 - Accounting
 - Log all authentication/authorization activities, and consider an appropriate data retention policy
 - Store logs in an external system where data cannot be modified/deleted
-- Integrate with a SEIM/Cybersecurity operations team who can detect/respond to unexpected behaviors
+- Integrate with a SEIM product and your enable your Cybersecurity operations team to detect/respond to unexpected behaviors
 
 # 5 - Conditional access
 - Configure conditional access using a solution like Microsoft Azure AD or Okta
 - Consider only allowing access from managed/corporate computers or devices
-- Check the posture of the user/computer being authenticated
-- Require multi-factor authentication for all interactive administrative interfaces (Web, SSH, etc.)
+- Consider checking the posture of the user/computer being authenticated
+- Require multi-factor authentication for all interactive administrative interfaces (Web, SSH, etc.), especially for public cloud-hosted SD-WAN solutions.
 
 # 6 - Vulnerability management process
-- Respond quickly to security threats by defining and establishing a vulnerability management process
+- Respond quickly to security vulnerabilities by defining and establishing a vulnerability management process
 - Setup a notification system with your SD-WAN vendor, integrate it into your incident/service request processes
 - Apply the latest security patches, or software upgrades in a timely manner
 - Establish approved software versions, and automated compliance checks
@@ -58,8 +58,8 @@ Ultimately, the goal is to ensure the security and integrity of the network infr
 - Repeat penetration tests periodically, or upon major changes to software or configuration
 
 # 9 - Vendor best practices/hardening
-- Ask for assistance from your SD-WAN vendor to apply their best practices for system hardening
-- Change all default credentials
+- Find out security best practices from your SD-WAN vendor
+- Change all default credentials/apply recommended hardening
 - Consider the security of related infrastructure such as cloud resources, authentication/management/monitoring systems
 
 # 10 - Establish response plans, and conduct drills
