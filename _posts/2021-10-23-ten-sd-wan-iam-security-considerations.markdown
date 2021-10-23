@@ -12,6 +12,7 @@ I’ve been working on commercialization of a new SD-WAN solution, including ide
 Ultimately, the goal is to ensure the security and integrity of the network infrastructure, by identifying risks and establishing controls to reduce the likelihood and severity of CyberSecurity incidents.
 
 # 1 - Risk assessment
+- Liaise with your Cybersecurity team from the outset
 - Completing a risk assessment before deploying SD-WAN ensures appropriate controls are implemented from the outset
 - The risk assessment should identify potential losses/failures, and determine control measures that will reduce/prevent a condition from occurring, or limit its severity
 - Work with your selected vendor to get their input/suggestions
