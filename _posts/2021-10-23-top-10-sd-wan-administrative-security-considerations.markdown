@@ -7,7 +7,7 @@ img: sd-wan.jpg
 tags: [sd-wan, access, control, identity, management, tacacs, saml]
 ---
 
-I've been working on commercialization of a new SD-WAN solution, including identity and access management for administrative users and system/tools integration.  In this article I'll document some of the key considerations for securing access to any SD-WAN solution.  
+I've been helping to commercialize a new SD-WAN solution, including identity and access management for administrative users and system/tools integration.  In this article I'll document some of the top considerations for securing access to any SD-WAN solution.  
 
 Ultimately, the goal is to ensure the security and integrity of the network infrastructure, by identifying risks and establishing controls to reduce the likelihood and severity of CyberSecurity incident.
 
