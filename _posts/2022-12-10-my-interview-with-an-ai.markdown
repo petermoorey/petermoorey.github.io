@@ -150,7 +150,7 @@ print("Configuration applied successfully!")
 ChatGPT: In this program, we use the Netmiko library to connect to the router and execute the specified configuration commands. The send_config_set method is used to send the configuration commands to the router and apply them. Once the configuration has been applied, a message is output indicating that the process was successful.
 
 
-### Pete: I'm curious, please can you show me how to use PyATS to create unit tests which ensure all BGP peers are established, and each peer is receiving at least 100 prefixes?
+### Pete: I'm curious, please can you show me how to use PyATS to create unit tests to ensure all BGP peers are established, and each peer is receiving at least 100 prefixes?
 
 ChatGPT: Sure, here is an example Python program using PyATS to create unit tests that ensure all BGP peers are established and receiving at least 100 prefixes:
 
