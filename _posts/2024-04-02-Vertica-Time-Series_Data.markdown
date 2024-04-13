@@ -15,7 +15,7 @@ Recently I've been using Grafana to visualise time series data from a Vertica Da
 ### Grafana
 [Grafana](https://grafana.com/) is an open-source observability platform, supporting a vast range of data sources, including Vertica.  It's highly extensible via a plug-in ecosystem, supporting many different types of data including metrics, logs, and traces.  Dashboards are built from modular panels, with a variety of different charts/visualizations available.
 
-[Ducumentation](https://grafana.com/grafana/plugins/vertica-grafana-datasource/) for the Vertica data source includes the supported built-in variables which are required to optimise data queries.
+[Documentation](https://grafana.com/grafana/plugins/vertica-grafana-datasource/) for the Vertica data source includes the supported built-in variables which are required to optimise data queries.
 
 There is also a really nice demo website ([https://play.grafana.org/](https://play.grafana.org/)) where you can explore Grafana and it's functionality.
 
