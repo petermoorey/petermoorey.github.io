@@ -6,7 +6,7 @@ description:
 img: grafana.jpg
 tags: [vertica, grafana, timeseries, visualization, timeslice, hours, minutes, days]
 ---
-Recently I've using Grafana to visualise time series data from a Vertica Database.  This article covers some of the techniques I used to optimise the performance of SQL queries/visualization.
+Recently I've been using Grafana to visualise time series data from a Vertica Database.  This article covers some of the techniques I found to optimise the performance of SQL queries/visualization.
 
 <div class="alert alert-info">
   <strong>Note:</strong> I don't proclaim to be an expert in this area, these are just my findings after experimentation.  I did gain some significant performance improvements, however, if you see opportunities for enhancement please contact me so I can update the article.
@@ -15,9 +15,9 @@ Recently I've using Grafana to visualise time series data from a Vertica Databas
 ### Grafana
 [Grafana](https://grafana.com/) is an open-source observability platform, supporting a vast range of data sources, including Vertica.  It's highly extensible via a plug-in ecosystem, supporting many different types of data including metrics, logs, and traces.  Dashboards are built from modular panels, with a variety of different charts/visualizations available.
 
-Documentation for the Vertica data source plug-in can be found at [https://grafana.com/grafana/plugins/vertica-grafana-datasource/](https://grafana.com/grafana/plugins/vertica-grafana-datasource/) and includes the supported built-in variables which are required to optimise data queries.
+[Ducumentation](https://grafana.com/grafana/plugins/vertica-grafana-datasource/) for the Vertica data source includes the supported built-in variables which are required to optimise data queries.
 
-There is also a really nice demo website ([https://play.grafana.org/](https://play.grafana.org/)) where you can explore functionality.
+There is also a really nice demo website ([https://play.grafana.org/](https://play.grafana.org/)) where you can explore Grafana and it's functionality.
 
 ### Vertica
 [Vertica](https://www.vertica.com/) is a high performance relational, analytical database from OpenText, designed to handle extremely large datasets. It uses a columnar storage architecture, and makes significant use of compression to reduce storage, and increase data retention.  To explore a Vertica database I recommend [DBeaver](https://dbeaver.io/), an open-source (Apache License) database client which supports many different types of database connections.
@@ -25,7 +25,7 @@ There is also a really nice demo website ([https://play.grafana.org/](https://pl
 ### Use Case
 In this example I'm using a database which is part of the [OpenText Network Operations Manager (NOM)](https://www.opentext.com/products/network-operations-management) OPTIC solution, which collects and stores network device resource metrics.  I'll create charts to visualise interface utilization, as well as error and discard rates.
 
-The OpenText NOM product provides three tables with different levels of data aggregation for interface metrics.  The levels are 5-Minute, Hourly, and Daily.
+OpenText NOM provides three tables with different levels of data aggregation for interface metrics, these are 5-Minute, Hourly, and Daily.
 
 **Complete SQL Query**
 
@@ -33,7 +33,7 @@ Below is the complete SQL query for reference.
 
 ```sql
 SELECT 
-  descr.node_short_name || ' - ' || descr.netif_description || ' (' || left(descr.netif_alias, 40) || ')' AS ifname, 
+  descr.node_short_name || ' - ' || descr.netif_description || ' (' || LEFT(descr.netif_alias, 40) || ')' AS ifname, 
   sq.throughput_in AS BW_In, 
   sq.throughput_out AS BW_Out, 
   sq.discards_out, 
@@ -143,13 +143,13 @@ ORDER BY
 
 #### Timeslice
 
-The Vertica [Time_Slice](https://www.vertica.com/docs/10.0.x/HTML/Content/Authoring/SQLReferenceManual/Functions/Date-Time/TIME_SLICE.htm) function aggregates data by the specified time interval.
+The Vertica [```Time_Slice```](https://www.vertica.com/docs/10.0.x/HTML/Content/Authoring/SQLReferenceManual/Functions/Date-Time/TIME_SLICE.htm) function aggregates data by the specified time interval.
 
-Grafana supports the ability to use dynamic time intervals, automatically calculated based on the time window selected by the user (e.g. last 7 days), the width of the chart (pixels), and (optionally) maximum desired data points.
+Grafana supports the ability to use dynamic time intervals, automatically calculated based on the time window selected by the user (e.g. last 7 days), the width of the chart (pixels), and optionally, maximum desired data points.
 
-The calculated time interval is provided via the $__interval (e.g. 15m) and $__interval_ms (900000ms) variables.
+The calculated time interval is provided via the ```$__interval``` (e.g. 15m) and ```$__interval_ms``` (e.g. 900000ms) variables.
 
-Passing in the $__interval_ms variable, and setting the time unit to Milliseconds ensures accurate aggregation.
+Passing in the ```$__interval_ms``` variable, and setting the time unit to Milliseconds ensures accurate aggregation.
 
 ```sql
 TIME_SLICE(to_timestamp(timestamp_utc_s), $__interval_ms, 'MILLISECOND')
@@ -159,7 +159,7 @@ TIME_SLICE(to_timestamp(timestamp_utc_s), $__interval_ms, 'MILLISECOND')
 
 Querying the 5-Minute table for 30 days worth of data is clearly not efficient, given the thousands of rows of data that would need to be processed.  For longer time windows we need a mechanism to use the hourly or daily aggregation tables instead.
 
-To achieve this logic I took advantage of the Grafana $__interval variable which indicates resolution of 'm', 'h' and 'd' (e.g. '15m' for 15 minutes).  I can match these using a where clause to return data from the appropriate table.
+To achieve this logic I took advantage of the Grafana ```$__interval``` variable which indicates resolution of 'm', 'h' and 'd' (e.g. '15m' for 15 minutes).  I can match these using a where clause to return data from the appropriate table.
 
 The logic is essentially to merge multiple select statements for each table, however only one of the tables will return any data matching the appropriate aggregation (minutes, hours, days):
 
@@ -216,7 +216,7 @@ After creating the first query/visualization (with multiple metrics selected), c
 
 ![](/assets/img/vertica/panel-ds.jpg)
 
-At this point, you'll see each panel has the same/many metrics shown; to show only the relevant metrics in each chart, apply the transformation 'Filter fields by name'.  In this case I only need the Timestamp (ts), and 'BW_Out*' metrics.
+At this point, you'll see each panel has the same/many metrics shown; to show only the relevant metrics in each chart, apply the transformation 'Filter fields by name'.  In this case I only need the Timestamp (```ts```), and '```BW_Out*```' metrics.
 
 ![alt text](image-2.png)
 
