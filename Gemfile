@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem "just-the-docs"
+gem "jekyll"
 
 group :jekyll_plugins do
   gem "jekyll-sitemap"
