@@ -6,27 +6,26 @@ description:
 img: grafana.jpg
 tags: [vertica, grafana, timeseries, visualization, timeslice, hours, minutes, days]
 ---
-Recently I've been exploring the use of Grafana to visualise time series data, from a Vertica Database.  This article covers some of the solutions I used to optimise the performance of SQL queries/visualization.
+Recently I've using Grafana to visualise time series data from a Vertica Database.  This article covers some of the techniques I used to optimise the performance of SQL queries/visualization.
 
 <div class="alert alert-info">
-  <strong>Note:</strong> I don't proclaim to be an expert in this area, these are just my findings after experimentation.  I did gain significant performance improvements, but if you see opportunities for enhancement please contact me so I can update the article.
+  <strong>Note:</strong> I don't proclaim to be an expert in this area, these are just my findings after experimentation.  I did gain some significant performance improvements, however, if you see opportunities for enhancement please contact me so I can update the article.
 </div>
 
 ### Grafana
 [Grafana](https://grafana.com/) is an open-source observability platform, supporting a vast range of data sources, including Vertica.  It's highly extensible via a plug-in ecosystem, supporting many different types of data including metrics, logs, and traces.  Dashboards are built from modular panels, with a variety of different charts/visualizations available.
 
-Documentation for the Vertica data source plug-in can be found at the link below, it includes the supported built-in variables which are required to optimise data queries.
-https://grafana.com/grafana/plugins/vertica-grafana-datasource/
+Documentation for the Vertica data source plug-in can be found at [https://grafana.com/grafana/plugins/vertica-grafana-datasource/](https://grafana.com/grafana/plugins/vertica-grafana-datasource/) and includes the supported built-in variables which are required to optimise data queries.
 
-There is a really nice demo website (https://play.grafana.org/) where you can explore functionality.
+There is also a really nice demo website ([https://play.grafana.org/](https://play.grafana.org/)) where you can explore functionality.
 
 ### Vertica
-[Vertica](https://www.vertica.com/) is a high performance analytical database from OpenText, designed to handle extremely large datasets. It uses Columnar storage architecture, and makes significant use of compression to reduce storage, and increase data retention.  To explore a Vertica database I recommend [DBeaver](https://dbeaver.io/), an open-source (Apache License) database client which supports many different types of database connections.
+[Vertica](https://www.vertica.com/) is a high performance relational, analytical database from OpenText, designed to handle extremely large datasets. It uses a columnar storage architecture, and makes significant use of compression to reduce storage, and increase data retention.  To explore a Vertica database I recommend [DBeaver](https://dbeaver.io/), an open-source (Apache License) database client which supports many different types of database connections.
 
 ### Use Case
-In this example I'm using a Vertica database which is part of the OpenText Network Operations Manager (NOM) OPTIC solution, which collects and stores network device resource metrics.  I'll create charts to visualise interface utilization, as well as error and discard rates.
+In this example I'm using a database which is part of the [OpenText Network Operations Manager (NOM)](https://www.opentext.com/products/network-operations-management) OPTIC solution, which collects and stores network device resource metrics.  I'll create charts to visualise interface utilization, as well as error and discard rates.
 
-The solution provides three tables with different levels of data aggregation for interface metrics.  The levels are 5-Minute, Hourly, and Daily.
+The OpenText NOM product provides three tables with different levels of data aggregation for interface metrics.  The levels are 5-Minute, Hourly, and Daily.
 
 **Complete SQL Query**
 
@@ -164,6 +163,13 @@ To achieve this logic I took advantage of the Grafana $__interval variable which
 
 The logic is essentially to merge multiple select statements for each table, however only one of the tables will return any data matching the appropriate aggregation (minutes, hours, days):
 
+<div class="alert alert-info">
+  <strong>Note:</strong> It might be possible to improve/simplify this approach using a View on the server-side.  The query was also made slightly more complex due to column names differing across tables.  Something for the future...
+</div>
+<br>
+
+_Pseudo code for combining multiple select statements with conditions_
+
 ```sql
 SELECT FROM (
   SELECT
@@ -187,23 +193,24 @@ SELECT FROM (
 )
 ```
 
-<div class="alert alert-info">
-  <strong>Note:</strong> It might be possible to improve/simplify this approach using a View on the server-side.  The query was also made slightly more complex due to column names differing across tables.  Something for the future...
-</div>
 
-#### Max Data Points
+#### Grafana Max Data Points
 
-Automatic time interval calculation is a fantastic feature because it enables appropriate scaling of the data query based on the selected time window, however by default I found the visual appearance of the graph to be quite unappealing; there are far too many data points, and  queries take an excessive time to load.
+Grafana automatic time interval calculation is a fantastic feature because it enables appropriate scaling of the data/query based on the time window selected by the user, however by default I found the visual appearance of the graph to be quite unappealing with far too many data points shown, also queries took an excessive time to load.
 
-Chart for 7-day period, with 1,661 data points at 5-minute interval - it took 14.4 seconds to load, all data came from the 5-Minute table.
+By setting the maximum data points it helped to select a visually appealing time interval, and improved performance quite dramatically.
+
+![alt text](image-3.png)
+
+_Chart for 7-day period, with 1,661 data points (automatically calculated) at 5-minute interval - it took **14.4 seconds** to load, all data came from the 5-Minute table._
 ![](/assets/img/vertica/auto-interval.jpg)
 
-Chart for same time period, but with 200 (fixed) data points (now calculated at 1-hour interval) - taking 2.4 seconds to load, with all data coming from the hourly table.  Visual appearance has also improved.
+_Chart for same time period, but with 200 (fixed) data points (now calculated at 1-hour interval) - taking **2.4 seconds** to load, with all data coming from the hourly table.  Visual appearance has also improved._
 ![](/assets/img/vertica/auto-interval-200dp.jpg)
 
-#### Query Re-Use
+#### Grafana Query Re-Use
 
-A nice feature of Grafana is the ability to create multiple charts with a single SQL query.  Typically it's more efficient to make one query for four metrics, than to make four queries each with a single metric.
+A nice feature of Grafana is the ability to create multiple charts with a single database query.  Typically it's more efficient to make one query for four metrics, than to make four queries each with a single metric.
 
 After creating the first query/visualization (with multiple metrics selected), create the next visualization and choose the data source 'Dashboard', and select the panel created previously.
 
@@ -215,7 +222,9 @@ At this point, you'll see each panel has the same/many metrics shown; to show on
 
 Screenshot showing four charts using data from a single query, improving time to load by 70% or more.
 
-![alt text](image-1.png)
+![alt text](image-4.png)
+
+### Wrap-Up
 
 This was my first experience using a Vertica data source with Grafana, after iterating/discovering these optimizations I was able to successfully improve the performance of the dashboard quite considerably, from 15 seconds to around 2-3 seconds.
 
