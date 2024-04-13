@@ -17,13 +17,13 @@ Recently I've been using Grafana to visualise time series data from a Vertica Da
 
 [Documentation](https://grafana.com/grafana/plugins/vertica-grafana-datasource/) for the Vertica data source includes the supported built-in variables which are required to optimise data queries.
 
-There is also a really nice demo website ([https://play.grafana.org/](https://play.grafana.org/)) where you can explore Grafana and it's functionality.
+There is also a really nice demo website ([https://play.grafana.org/](https://play.grafana.org/)) where you can explore Grafana and its functionality.
 
 ### Vertica
 [Vertica](https://www.vertica.com/) is a high performance relational, analytical database from OpenText, designed to handle extremely large datasets. It uses a columnar storage architecture, and makes significant use of compression to reduce storage, and increase data retention.  To explore a Vertica database I recommend [DBeaver](https://dbeaver.io/), an open-source (Apache License) database client which supports many different types of database connections.
 
 ### Use Case
-In this example I'm using a database which is part of the [OpenText Network Operations Manager (NOM)](https://www.opentext.com/products/network-operations-management) OPTIC solution, which collects and stores network device resource metrics.  I'll create charts to visualise interface utilization, as well as error and discard rates.
+In this example I'm using a database which is part of [OpenText Network Operations Management (NOM)](https://www.opentext.com/products/network-operations-management) OPTIC solution, which collects and stores network device resource metrics.  I'll create charts to visualise interface utilization, as well as error and discard rates.
 
 OpenText NOM provides three tables with different levels of data aggregation for interface metrics, these are 5-Minute, Hourly, and Daily.
 
