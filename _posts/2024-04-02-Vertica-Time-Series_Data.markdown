@@ -222,7 +222,7 @@ At this point, you'll see each panel has the same/many metrics shown; to show on
 
 Screenshot showing four charts using data from a single query, improving time to load by 70% or more.
 
-![alt text](/assets/img/vertica/image-4.png)
+![alt text](/assets/img/vertica/image-1.png)
 
 ### Wrap-Up
 
