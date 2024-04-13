@@ -200,7 +200,7 @@ Grafana automatic time interval calculation is a fantastic feature because it en
 
 By setting the maximum data points it helped to select a visually appealing time interval, and improved performance quite dramatically.
 
-![alt text](image-3.png)
+![alt text](/assets/img/vertica/image-3.png)
 
 _Chart for 7-day period, with 1,661 data points (automatically calculated) at 5-minute interval - it took **14.4 seconds** to load, all data came from the 5-Minute table._
 ![](/assets/img/vertica/auto-interval.jpg)
@@ -218,11 +218,11 @@ After creating the first query/visualization (with multiple metrics selected), c
 
 At this point, you'll see each panel has the same/many metrics shown; to show only the relevant metrics in each chart, apply the transformation 'Filter fields by name'.  In this case I only need the Timestamp (```ts```), and '```BW_Out*```' metrics.
 
-![alt text](image-2.png)
+![alt text](/assets/img/vertica/image-2.png)
 
 Screenshot showing four charts using data from a single query, improving time to load by 70% or more.
 
-![alt text](image-4.png)
+![alt text](/assets/img/vertica/image-4.png)
 
 ### Wrap-Up
 
