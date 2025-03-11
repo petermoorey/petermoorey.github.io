@@ -7,7 +7,7 @@ img: dhcp.jpg
 tags: [dhcp, server, packet capture, wireshark]
 ---
 ### Introduction
-IT operations teams prepared to change the IP addresses of multiple centralized/global DHCP servers.  This type of change poses a high risk as it depends on the updated DHCP relay configuration being in place on thousands of switches, routers, firewalls and other devices.
+IT operations teams were preparing a major task, to change the IP addresses of multiple centralized/global DHCP servers.  This type of change poses a high risk as it depends on new DHCP relay configuration being in place on thousands of switches, routers, firewalls and other devices ahead of the change.
 
 To ensure the success of the project I saw an opportunity to systematically verify all settings before the change was scheduled.  This post details the methodology which includes the following high-level steps:
 
@@ -20,7 +20,7 @@ Just a quick reminder on the basics of DHCP before we get started...
 
 **DHCP (Dynamic Host Configuration Protocol)**
 
-DHCP is a network management protocol used to automate the process of configuring devices on IP networks. It allows devices to receive IP addresses and other network configuration parameters automatically, without the need for manual intervention. This is essential for managing large networks efficiently. When a device connects to the network, it sends a DHCP request to the DHCP server, which then assigns an IP address and other necessary configuration details to the device.
+DHCP is a protocol used to automate the process of configuring devices on IP networks. It allows devices to receive IP addresses and other network configuration parameters automatically, without the need for manual intervention. This is essential for managing large networks efficiently. When a device connects to the network, it sends a DHCP request to the DHCP server, which then assigns an IP address and other necessary configuration details to the device.
 
 **DHCP Relays**
 
@@ -28,7 +28,7 @@ DHCP is a network management protocol used to automate the process of configurin
 A DHCP relay is a network device that forwards DHCP requests from clients to a DHCP server that is not on the same local network. This is useful in large networks where multiple subnets are used, and a centralised DHCP server is preferred. The DHCP relay listens for DHCP requests on its local network and forwards them to the DHCP server. The server processes the request and sends the response back to the relay, which then forwards it to the client. This ensures that devices on different subnets can still receive IP addresses and configuration from a central DHCP server.
 
 ### Step 1 - Gathering DHCP Request Data
-Before I became involved in the change, the DHCP relay configuration had already been deployed globally.  Despite the servers not being updated yet with the new IP addresses, I knew DHCP relays would still send packets to all configured server IPs, including the new ones.
+Before I became involved in the change, the DHCP relay configuration had already been deployed globally.  Despite the servers not being updated yet with the new IP addresses, I knew each DHCP relay would send packets to all configured server IPs, including the new ones.
 
 My approach was to check each DHCP relay IP (representing a subnet/scope) and validate DHCP requests are being sent to both old and new server IPs.
 
@@ -52,6 +52,10 @@ monitor capture dhcp_capture match ipv4 protocol udp any eq 67 any limit packet-
 
 Once this was complete I exported the files to my laptop for processing.
 
+```
+monitor capture dhcp_capture export scp://host.xyz.com:/dhcp_capture_1.pcap
+```
+
 ### Step 2 - Data transformation
 
 I now have multiple packet capture files, one from each of the routers.  To make the rest of the analysis simpler I merged them into a single file using Wireshark command-line tool 'mergecap'.
@@ -62,7 +66,7 @@ I now have multiple packet capture files, one from each of the routers.  To make
 
 Now I have a single file with all the DHCP requests, I want to extract all possible source and destination IP pairs, so that I can later check the requests are being sent to all servers by the DHCP relays.
 
-I use the Wireshark 'tshark' command-line tool to apply a display filter (selecting only the DHCP servers I'm concerned with), and export the source/destination IPs.  I also deduplicate the conversations and finally save them to a CSV file.
+I use the Wireshark 'tshark' command-line tool to apply a display filter (selecting only the DHCP servers I'm concerned with), and export the source/destination IPs pairs for each DHCP request.  I also deduplicate the conversations and finally save them to a CSV file.
 
 
 ```bash
