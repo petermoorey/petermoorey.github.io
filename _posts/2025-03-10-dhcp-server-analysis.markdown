@@ -73,13 +73,13 @@ I use the Wireshark 'tshark' command-line tool to apply a display filter (select
 
 2. -r ./dhcp-merged.pcapng: Specifies the input pcapng file to read, in this case, dhcp-merged.pcapng.
 
-3. -Y "(ip.dst==10.0.0.1 || ip.dst==10.0.0.2 || ip.dst==10.0.0.3)": Sets a display filter to match packets with specific destination IP addresses.
+3. -Y "(ip.dst\==10.0.0.1 || ip.dst\==10.0.0.2 || ip.dst\==10.0.0.3)": Sets a display filter to match packets with specific destination IP addresses.
 
 4. -T fields -e ip.src -e ip.dst: Specifies the output format to show only the source and destination IP addresses.
 
 5. -E separator=,: Sets the field separator to a comma.
 
-6. | awk '!seen[$0]++': Uses awk to remove duplicate lines from the output.
+6. \| awk '!seen[$0]++': Uses awk to remove duplicate lines from the output.
 
 7. \> ../pcap_merged_filtered_deduped.csv: Redirects the output to a CSV file named pcap_merged_filtered_deduped.csv.
 
