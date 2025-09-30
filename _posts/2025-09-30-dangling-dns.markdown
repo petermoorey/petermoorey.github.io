@@ -23,11 +23,12 @@ Attackers can claim the unassigned resource, set up their own infrastructure, an
 
 Here is a practical scenario:
 
-- DNS CNAME record superapp.company.com is created, resolving to `superapp01.websites.cloudprovider.com`.
-- `superapp01.websites.cloudprovider.com` is decommissioned, but its DNS record remains.
+- A developer creates a website hosted at `superapp01.websites.cloudprovider.com`
+- Friendly DNS CNAME record `superapp.company.com` is created, resolving to `superapp01.websites.cloudprovider.com`.
+- The website `superapp01.websites.cloudprovider.com` is decommissioned, but its DNS record remains.
 - An attacker notices the DNS entry still points to a hosting platform.
-- The attacker creates a new resource in their own account, matching the original name `superapp01.websites.cloudprovider.com`.
-- The DNS now resolves to the attacker’s infrastructure, but under your organization’s domain.
+- The attacker creates a new website in their own account, matching the original name `superapp01.websites.cloudprovider.com`.
+- DNS now resolves to the attacker’s infrastructure, but under your organization’s domain.
 
 **Consequences:**
 
