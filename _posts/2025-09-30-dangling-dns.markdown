@@ -9,7 +9,7 @@ tags: [domain name system, dns, dangling, cybersecurity]
 
 ## Introduction: The Unseen Risk in DNS
 
-DNS (Domain Name System) enables users reach your applications and services. It translates human‑friendly names into the addresses computers use. If DNS records are not kept up to date, they can become a serious liability. One of the most overlooked issues is the presence of dangling DNS records.
+DNS (Domain Name System) enables users reach applications and services. It translates human‑friendly names into the addresses computers use. If DNS records are not kept up to date, they can become a serious liability. One of the most overlooked issues is the presence of dangling DNS records.
 
 A dangling DNS record is an entry that points to a resource that no longer exists or is no longer under your control. These records are not just clutter; they are a real security risk. Attackers actively look for them, and if they find one, they can hijack your subdomain, impersonate your services, capture cookies, and launch phishing or malware campaigns.
 
@@ -23,9 +23,10 @@ Attackers can claim the unassigned resource, set up their own infrastructure, an
 
 Here is a practical scenario:
 
-- A cloud‑hosted app is decommissioned, but its DNS record remains.
+- DNS CNAME record superapp.company.com is created, resolving to `superapp01.websites.cloudprovider.com`.
+- `superapp01.websites.cloudprovider.com` is decommissioned, but its DNS record remains.
 - An attacker notices the DNS entry still points to a hosting platform.
-- The attacker creates a new resource in their own account, matching the original name.
+- The attacker creates a new resource in their own account, matching the original name `superapp01.websites.cloudprovider.com`.
 - The DNS now resolves to the attacker’s infrastructure, but under your organization’s domain.
 
 **Consequences:**
@@ -82,8 +83,6 @@ Despite the risks, dangling DNS records are common. Reasons include:
 Modern teams are adopting automated, application‑centric DNS management. By integrating DNS records into configuration management systems, automating compliance checks, and applying deterministic validation, it is possible to reduce the risk of dangling DNS records significantly.
 
 However, technology alone is not enough. Success requires visibility, ownership, automation, and a culture of security awareness.
-
-## Conclusion
 
 Dangling DNS records are a silent but serious threat. They are easy to overlook, yet the consequences can be severe. By taking a proactive and governance‑driven approach, organizations can close this gap and protect their users, data, and reputation.
 
