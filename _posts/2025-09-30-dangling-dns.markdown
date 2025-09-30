@@ -1,6 +1,6 @@
 ---
 layout: post
-title: The Hidden Threat of Dangling DNS Records: Why They Matter and How to Fix Them
+title: The Hidden Threat of Dangling DNS Records
 date: 2025-09-30 08:38:20 +0000
 description: 
 img: dangling_dns.jpg
